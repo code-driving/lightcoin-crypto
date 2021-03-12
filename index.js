@@ -5,25 +5,25 @@ class Account {
   }
 }
 
-class Withdrawal {
+class Transaction {
   constructor(amount, account) {
     this.amount = amount;
     this.account = account;
   }
-
   commit() {
-    this.account.balance -= this.amount;
+    this.account.balance += this.value;
   }
 }
 
-class Deposit {
-  constructor(amount, account) {
-    this.amount = amount;
-    this.account = account;
+class Withdrawal extends Transaction {
+  get value() {
+    return -this.amount;
   }
+}
 
-  commit() {
-    this.account.balance += this.amount;
+class Deposit extends Transaction {
+  get value() {
+    return this.amount;
   }
 }
 
@@ -40,4 +40,4 @@ console.log("Transaction 2:", t2);
 let t3 = new Deposit(120.0, myAccount);
 t3.commit();
 console.log("Transaction 3:", t3);
-console.log("Balance:", balance);
+console.log("Balance:", myAccount.balance);
